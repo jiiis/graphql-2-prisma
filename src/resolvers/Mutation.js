@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 
-import generateToken from "../utils/generateToken";
-import hashPassword from "../utils/hashPassword";
+import generateToken from '../utils/generateToken'
+import hashPassword from '../utils/hashPassword'
 import getUserId from '../utils/getUserId'
 
 const Mutation = {
@@ -64,7 +64,7 @@ const Mutation = {
       throw new Error('Post not found!')
     }
 
-    return prisma.mutation.deletePost({ where: { id: args.id } }, info)
+    return prisma.mutation.deletePost({ where: { id } }, info)
   },
   async updatePost(parent, { id, data }, { prisma, request }, info) {
     const userId = getUserId(request)
