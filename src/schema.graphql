@@ -104,8 +104,8 @@ type Comment {
 
 enum MutationType {
   CREATED
-  DELETED
   UPDATED
+  DELETED
 }
 
 type PostSubscriptionPayload {

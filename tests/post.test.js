@@ -1,7 +1,7 @@
 import 'cross-fetch/polyfill'
 
 import prisma from '../src/prisma'
-import { createPost, deletePost, getPosts, myPosts, updatePost } from './utils/operations'
+import { createPost, deletePost, getPosts, myPosts, subscribeToPosts, updatePost } from './utils/operations'
 import seedDatabase, { postOne, postTwo, userOne } from './utils/seedDatabase'
 import getClient from './utils/getClient'
 
@@ -71,4 +71,16 @@ test('Should be able to delete posts', async () => {
 
   expect(data.deletePost.id).toBe(postTwo.post.id)
   expect(exists).toBe(false)
+})
+
+test('Should subscribe to posts', async (done) => {
+  client.subscribe({ query: subscribeToPosts }).subscribe({
+    next(response) {
+      expect(response.data.post.mutation).toBe('DELETED')
+
+      done()
+    }
+  })
+
+  await prisma.mutation.deletePost({ where: { id: postOne.post.id } })
 })
